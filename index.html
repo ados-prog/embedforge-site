@@ -1,10 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>EmbedForge</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h1>EmbedForge</h1>
-  <p>Embedded & Electronics Engineering</p>
+<body class="bg-slate-950 text-slate-100">
+  <section class="max-w-6xl mx-auto px-6 py-20">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <div class="inline-block px-3 py-1 rounded-full bg-slate-800 text-sm mb-6">Embedded & Electronics Engineering</div>
+        <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6">Embed<span class="text-cyan-400">Forge</span></h1>
+        <p class="text-xl text-slate-300 mb-8 leading-relaxed">Embedded systems, firmware, and custom electronics — from concept to working prototype.</p>
+        <div class="flex gap-4 flex-wrap">
+          <a href="#contact" class="px-6 py-3 rounded-2xl bg-cyan-500 text-slate-950 font-semibold">Contact</a>
+          <a href="#services" class="px-6 py-3 rounded-2xl border border-slate-700">Services</a>
+        </div>
+      </div>
+      <div class="bg-slate-900 rounded-3xl p-8 border border-slate-800">
+        <h3 class="text-2xl font-semibold mb-6">Core Stack</h3>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">STM32</div>
+          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">ESP32</div>
+          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">PCB Design</div>
+          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">Embedded C</div>
+          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">Python</div>
+          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">RTOS</div>
+          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">BLE/WiFi</div>
+          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">Debugging</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="max-w-6xl mx-auto px-6 py-16">
+    <h2 class="text-4xl font-bold mb-10">Services</h2>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">Embedded firmware development</div>
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">Custom PCB design</div>
+      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">Prototype bring-up & debugging</div>
+    </div>
+  </section>
+
+  <section id="contact" class="max-w-6xl mx-auto px-6 py-20 text-center">
+    <div class="bg-cyan-500 text-slate-950 rounded-3xl p-12">
+      <h2 class="text-4xl font-bold mb-4">Let’s build something.</h2>
+      <p class="text-lg mb-6">Available for freelance projects, consulting, and technical mentoring.</p>
+      <p class="font-semibold">contact@embedforge.is-a.dev</p>
+    </div>
+  </section>
 </body>
 </html>
