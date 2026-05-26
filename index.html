@@ -2,81 +2,204 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EmbedForge</title>
-  <link rel="icon" href="/favicon.ico" sizes="any">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>EmbedForge | Embedded Systems & Firmware Development</title>
+  <meta name="description" content="Embedded systems engineering, firmware development, PCB design, STM32, ESP32, BLE Mesh, Modbus, IoT solutions.">
+
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <meta name="description" content="Embedded systems, firmware development, PCB design and electronics consulting. STM32, ESP32, BLE, Modbus, CAN.">
-  <meta name="keywords" content="embedded systems, firmware, STM32, ESP32, PCB design, electronics, BLE, Modbus, CAN, IoT">
-  <meta name="author" content="EmbedForge">
-  
-  <meta property="og:title" content="EmbedForge">
-  <meta property="og:description" content="Embedded systems, firmware development and custom electronics.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://embedforge.is-a.dev">
-  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:Arial,sans-serif;
+      background:#0d1117;
+      color:#fff;
+      line-height:1.6;
+    }
+
+    .container{
+      max-width:1100px;
+      margin:auto;
+      padding:40px 20px;
+    }
+
+    header{
+      text-align:center;
+      padding:80px 20px;
+    }
+
+    header h1{
+      font-size:3rem;
+      color:#58a6ff;
+      margin-bottom:20px;
+    }
+
+    header p{
+      font-size:1.3rem;
+      color:#c9d1d9;
+      max-width:800px;
+      margin:auto;
+    }
+
+    .badges{
+      margin-top:30px;
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:15px;
+    }
+
+    .badge{
+      background:#161b22;
+      padding:12px 20px;
+      border-radius:10px;
+      border:1px solid #30363d;
+      font-weight:bold;
+      color:#58a6ff;
+    }
+
+    section{
+      margin-top:80px;
+    }
+
+    h2{
+      text-align:center;
+      color:#58a6ff;
+      margin-bottom:40px;
+      font-size:2rem;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:25px;
+    }
+
+    .card{
+      background:#161b22;
+      padding:30px;
+      border-radius:15px;
+      border:1px solid #30363d;
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
+      border-color:#58a6ff;
+    }
+
+    .card h3{
+      margin-bottom:15px;
+      color:#58a6ff;
+    }
+
+    footer{
+      text-align:center;
+      padding:60px 20px;
+      color:#8b949e;
+    }
+
+    a{
+      color:#58a6ff;
+      text-decoration:none;
+    }
+
+  </style>
 </head>
-<body class="bg-slate-950 text-slate-100">
-  <section class="max-w-6xl mx-auto px-6 py-20">
-    <div class="grid md:grid-cols-2 gap-12 items-center">
-      <div>
-        <div class="inline-block px-3 py-1 rounded-full bg-slate-800 text-sm mb-6">Embedded & Electronics Engineering</div>
-        <h1 class="text-5xl md:text-7xl font-bold tracking-tight mb-6">Embed<span class="text-cyan-400">Forge</span></h1>
-        <p class="text-xl text-slate-300 mb-8 leading-relaxed">Embedded systems, firmware, and custom electronics — from concept to working prototype.</p>
-        <div class="flex gap-4 flex-wrap">
-          <a href="#contact" class="px-6 py-3 rounded-2xl bg-cyan-500 text-slate-950 font-semibold">Contact</a>
-          <a href="#services" class="px-6 py-3 rounded-2xl border border-slate-700">Services</a>
-        </div>
-      </div>
-      <div class="bg-slate-900 rounded-3xl p-8 border border-slate-800">
-        <h3 class="text-2xl font-semibold mb-6">Core Stack</h3>
-        <div class="grid grid-cols-2 gap-3">
-          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">STM32</div>
-          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">ESP32</div>
-          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">PCB Design</div>
-          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">Embedded C</div>
-          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">Python</div>
-          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">RTOS</div>
-          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">BLE/WiFi</div>
-          <div class="rounded-xl bg-slate-800 px-4 py-3 text-center">Debugging</div>
-        </div>
-      </div>
-    </div>
-  </section>
+<body>
 
-  <section id="services" class="max-w-6xl mx-auto px-6 py-16">
-    <h2 class="text-4xl font-bold mb-10">Services</h2>
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">Embedded firmware development</div>
-      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">Custom PCB design</div>
-      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">Prototype bring-up & debugging</div>
-    </div>
-  </section>
+<div class="container">
 
-  <section class="max-w-6xl mx-auto px-6 py-16">
-    <h2 class="text-4xl font-bold mb-10">Selected Experience</h2>
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">
-        <h3 class="text-xl font-semibold mb-3">BLE Mesh Lighting Control</h3>
-        <p class="text-slate-300">Designed and developed a BLE Mesh platform for remote lighting control integrated with DALI-2 networks and Modbus systems, enabling scalable smart-building automation.</p>
-      </div>
-      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">
-        <h3 class="text-xl font-semibold mb-3">Industrial Ethernet / CAN / Modbus Gateway</h3>
-        <p class="text-slate-300">Built a multi-protocol gateway converting Modbus TCP over Ethernet to CAN, Modbus RTU and RS-485, ensuring reliable industrial communications and legacy integration.</p>
-      </div>
-      <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6">
-        <h3 class="text-xl font-semibold mb-3">Smart Home Control Modules</h3>
-        <p class="text-slate-300">Developed intelligent home automation modules including sensors, actuator drivers and expansion boards for distributed control systems.</p>
-      </div>
-    </div>
-  </section>
+<header>
+  <h1>EmbedForge</h1>
+  <p>
+    Embedded Systems & Firmware Development<br>
+    Professional engineering services for custom hardware and software solutions.
+  </p>
 
-  <section id="contact" class="max-w-6xl mx-auto px-6 py-20 text-center">
-    <div class="bg-cyan-500 text-slate-950 rounded-3xl p-12">
-      <h2 class="text-4xl font-bold mb-4">Let’s build something.</h2>
-      <p class="text-lg mb-6">Available for freelance projects, consulting, and technical mentoring.</p>
-      <a href="mailto:contact.embedforge@proton.me" class="font-semibold">contact.embedforge@proton.me</a>
+  <div class="badges">
+    <div class="badge">STM32</div>
+    <div class="badge">ESP32</div>
+    <div class="badge">PCB Design</div>
+    <div class="badge">BLE Mesh</div>
+    <div class="badge">Modbus</div>
+    <div class="badge">IoT</div>
+  </div>
+</header>
+
+<section>
+  <h2>Services</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>Firmware Development</h3>
+      <p>
+        Embedded C/C++, RTOS, bootloaders, device drivers, communication stacks.
+      </p>
     </div>
-  </section>
+
+    <div class="card">
+      <h3>Hardware Design</h3>
+      <p>
+        Custom PCB design, prototyping, electronics development and validation.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>IoT & Connectivity</h3>
+      <p>
+        BLE Mesh, WiFi, Ethernet, CAN, RS485, Modbus TCP/RTU integrations.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Consulting</h3>
+      <p>
+        Architecture reviews, debugging, optimization and product development support.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <h2>Projects</h2>
+
+  <div class="grid">
+
+    <div class="card">
+      <h3>BLE Mesh Lighting</h3>
+      <p>
+        Distributed smart lighting control integrated with DALI-2 and Modbus networks.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>ETH/CAN Gateway</h3>
+      <p>
+        Ethernet to CAN / Modbus TCP ↔ Modbus RTU gateway for industrial systems.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Smart Home Modules</h3>
+      <p>
+        Controllers, sensor modules, expansion boards and embedded automation devices.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  Contact:
+  <a href="mailto:contact.embedforge@proton.me">
+    contact.embedforge@proton.me
+  </a>
+</footer>
+
+</div>
+
 </body>
 </html>
