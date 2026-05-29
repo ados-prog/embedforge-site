@@ -76,6 +76,34 @@
         </button>
 
         <div
+          id="animationModal"
+          class="hidden fixed inset-0 z-[999] bg-black/80 backdrop-blur-sm flex items-center justify-center p-6"
+        >
+          <div class="glass rounded-[32px] p-8 max-w-2xl w-full text-center relative overflow-hidden">
+            <button
+              onclick="closeAnimationModal()"
+              style="position:absolute;top:18px;right:18px;background:#dc2626;border:none;color:white;width:42px;height:42px;border-radius:50%;font-weight:900;cursor:pointer"
+            >
+              ✕
+            </button>
+
+            <div class="text-sm uppercase tracking-[0.4em] text-yellow-400 mb-4">
+              Wykonaj zadanie
+            </div>
+
+            <h2 id="modalTaskTitle" class="text-5xl font-black mb-6"></h2>
+
+            <img
+              id="modalGif"
+              src=""
+              class="w-full rounded-3xl mb-6 max-h-[420px] object-cover border border-white/10"
+            />
+
+            <div id="modalPoints" class="text-3xl text-green-400 font-black"></div>
+          </div>
+        </div>
+
+        <div
           id="resultBox"
           class="hidden mt-10 bg-zinc-900 border border-zinc-700 rounded-3xl p-8 max-w-2xl w-full text-center shadow-2xl"
         >
@@ -184,6 +212,10 @@
     const challengePoints = document.getElementById('challengePoints');
     const playersBox = document.getElementById('players');
     const tasksList = document.getElementById('tasksList');
+    const animationModal = document.getElementById('animationModal');
+    const modalTaskTitle = document.getElementById('modalTaskTitle');
+    const modalGif = document.getElementById('modalGif');
+    const modalPoints = document.getElementById('modalPoints');
 
     let rotation = 0;
     let spinning = false;
@@ -200,6 +232,15 @@
       '#06b6d4',
       '#84cc16'
     ];
+
+    const taskAnimations = {
+      '20 przysiadów': 'https://media.giphy.com/media/3o7TKtnuHOHHUjR38Y/giphy.gif',
+      'Zaśpiewaj piosenkę': 'https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif',
+      'Taniec 30 sekund': 'https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif',
+      'Powiedz żart': 'https://media.giphy.com/media/3oEjHI8WJv4x6UPDB6/giphy.gif',
+      'Wyzwanie drużynowe': 'https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif',
+      'Mów szeptem minutę': 'https://media.giphy.com/media/ICOgUNjpvO0PC/giphy.gif'
+    };
 
     let tasks = [
       { text: '20 przysiadów', points: 200 },
@@ -341,6 +382,8 @@
         resultBox.classList.remove('hidden');
 
         window.currentTask = task;
+
+        showAnimationModal(task);
         spinning = false;
       }, 5000);
     }
@@ -434,6 +477,20 @@
 
         tasksList.appendChild(div);
       });
+    }
+
+    function showAnimationModal(task) {
+      modalTaskTitle.innerText = task.text;
+      modalPoints.innerText = `${task.points > 0 ? '+' : ''}${task.points} punktów`;
+
+      modalGif.src = taskAnimations[task.text]
+        || 'https://media.giphy.com/media/26BRuo6sLetdllPAQ/giphy.gif';
+
+      animationModal.classList.remove('hidden');
+    }
+
+    function closeAnimationModal() {
+      animationModal.classList.add('hidden');
     }
 
     function startTimer() {
