@@ -99,7 +99,7 @@
               class="w-full rounded-3xl mb-6 max-h-[420px] object-cover border border-white/10"
             />
 
-            <div id="modalPoints" class="text-3xl text-green-400 font-black"></div>
+            
           </div>
         </div>
 
@@ -113,7 +113,7 @@
 
           <h2 id="challengeText" class="text-4xl font-black mb-4"></h2>
 
-          <div id="challengePoints" class="text-2xl text-green-400 font-bold mb-6"></div>
+          
 
           <div class="flex justify-center gap-4 flex-wrap">
             <button
@@ -182,12 +182,7 @@
               class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 outline-none"
             />
 
-            <input
-              id="newPoints"
-              type="number"
-              value="100"
-              class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 outline-none"
-            />
+            
 
             <button
               onclick="addTask()"
@@ -215,7 +210,7 @@
     const animationModal = document.getElementById('animationModal');
     const modalTaskTitle = document.getElementById('modalTaskTitle');
     const modalGif = document.getElementById('modalGif');
-    const modalPoints = document.getElementById('modalPoints');
+    
 
     let rotation = 0;
     let spinning = false;
@@ -243,18 +238,18 @@
     };
 
     let tasks = [
-      { text: '20 przysiadów', points: 200 },
-      { text: 'Zaśpiewaj piosenkę', points: 300 },
-      { text: 'Taniec 30 sekund', points: 400 },
-      { text: 'Powiedz żart', points: 250 },
-      { text: '+500 punktów', points: 500 },
-      { text: 'Wyzwanie drużynowe', points: 350 },
-      { text: 'Mów szeptem minutę', points: 150 }
+      { text: '20 przysiadów' },
+      { text: 'Zaśpiewaj piosenkę' },
+      { text: 'Taniec 30 sekund' },
+      { text: 'Powiedz żart' },
+      
+      { text: 'Wyzwanie drużynowe' },
+      { text: 'Mów szeptem minutę' }
     ];
 
     let players = [
-      { name: 'Gracz 1', score: 0 },
-      { name: 'Gracz 2', score: 0 }
+      { name: 'Gracz 1',  },
+      { name: 'Gracz 2',  }
     ];
 
     function renderPlayers() {
@@ -276,9 +271,7 @@
             class="bg-transparent outline-none text-xl font-bold w-full"
           />
 
-          <div class="text-3xl font-black text-green-400 mt-2">
-            ${player.score}
-          </div>
+          
         `;
 
         playersBox.appendChild(div);
@@ -377,7 +370,7 @@
         const task = tasks[randomIndex];
 
         challengeText.innerText = tasks[randomIndex].text;
-        challengePoints.innerText = `${tasks[randomIndex].points > 0 ? '+' : ''}${tasks[randomIndex].points} punktów`;
+        
 
         resultBox.classList.remove('hidden');
 
@@ -389,7 +382,7 @@
     }
 
     function completeChallenge() {
-      players[currentPlayer].score += window.currentTask.points;
+      
       renderPlayers();
     renderTasks();
       nextPlayer();
@@ -403,7 +396,7 @@
     function addPlayer() {
       players.push({
         name: `Gracz ${players.length + 1}`,
-        score: 0
+        
       });
 
       renderPlayers();
@@ -411,11 +404,11 @@
 
     function addTask() {
       const text = document.getElementById('newTask').value;
-      const points = Number(document.getElementById('newPoints').value);
+      
 
       if (!text.trim()) return;
 
-      tasks.push({ text, points });
+      tasks.push({ text });
 
       document.getElementById('newTask').value = '';
       renderWheel();
@@ -432,12 +425,8 @@
       const newText = prompt('Edytuj zadanie:', tasks[index].text);
       if (newText === null) return;
 
-      const newPoints = prompt('Edytuj punkty:', tasks[index].points);
-      if (newPoints === null) return;
-
       tasks[index] = {
-        text: newText,
-        points: Number(newPoints)
+        text: newText
       };
 
       renderWheel();
@@ -454,7 +443,7 @@
 
         div.innerHTML = `
           <div class="font-bold text-lg mb-1">${task.text}</div>
-          <div class="text-green-400 font-bold mb-3">${task.points} pkt</div>
+          
 
           <div class="flex gap-2">
             <button
@@ -481,7 +470,7 @@
 
     function showAnimationModal(task) {
       modalTaskTitle.innerText = task.text;
-      modalPoints.innerText = `${task.points > 0 ? '+' : ''}${task.points} punktów`;
+      
 
       modalGif.src = taskAnimations[task.text]
         || 'https://media.giphy.com/media/26BRuo6sLetdllPAQ/giphy.gif';
