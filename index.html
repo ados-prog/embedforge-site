@@ -1,205 +1,365 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>EmbedForge | Embedded Systems & Firmware Development</title>
-  <meta name="description" content="Embedded systems engineering, firmware development, PCB design, STM32, ESP32, BLE Mesh, Modbus, IoT solutions.">
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wheel Challenge Pro</title>
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{
-      font-family:Arial,sans-serif;
-      background:#0d1117;
-      color:#fff;
-      line-height:1.6;
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: radial-gradient(circle at top, #1f2937, #000);
+      font-family: Arial, sans-serif;
     }
 
-    .container{
-      max-width:1100px;
-      margin:auto;
-      padding:40px 20px;
+    .wheel-container {
+      position: relative;
+      width: 500px;
+      height: 500px;
     }
 
-    header{
-      text-align:center;
-      padding:80px 20px;
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      border: 12px solid #111827;
+      transition: transform 5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+      box-shadow: 0 0 60px rgba(255,255,255,0.08);
     }
 
-    header h1{
-      font-size:3rem;
-      color:#58a6ff;
-      margin-bottom:20px;
+    .slice {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      transform-origin: 100% 100%;
+      clip-path: polygon(0 0, 100% 0, 100% 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    header p{
-      font-size:1.3rem;
-      color:#c9d1d9;
-      max-width:800px;
-      margin:auto;
+    .slice span {
+      position: absolute;
+      left: 70%;
+      top: 25%;
+      transform: rotate(45deg);
+      color: white;
+      font-weight: bold;
+      font-size: 12px;
+      width: 120px;
+      text-align: center;
     }
 
-    .badges{
-      margin-top:30px;
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:15px;
+    .pointer {
+      width: 0;
+      height: 0;
+      border-left: 25px solid transparent;
+      border-right: 25px solid transparent;
+      border-top: 45px solid #facc15;
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
     }
 
-    .badge{
-      background:#161b22;
-      padding:12px 20px;
-      border-radius:10px;
-      border:1px solid #30363d;
-      font-weight:bold;
-      color:#58a6ff;
+    .glow {
+      box-shadow: 0 0 30px rgba(250,204,21,0.6);
     }
-
-    section{
-      margin-top:80px;
-    }
-
-    h2{
-      text-align:center;
-      color:#58a6ff;
-      margin-bottom:40px;
-      font-size:2rem;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:25px;
-    }
-
-    .card{
-      background:#161b22;
-      padding:30px;
-      border-radius:15px;
-      border:1px solid #30363d;
-      transition:0.3s;
-    }
-
-    .card:hover{
-      transform:translateY(-5px);
-      border-color:#58a6ff;
-    }
-
-    .card h3{
-      margin-bottom:15px;
-      color:#58a6ff;
-    }
-
-    footer{
-      text-align:center;
-      padding:60px 20px;
-      color:#8b949e;
-    }
-
-    a{
-      color:#58a6ff;
-      text-decoration:none;
-    }
-
   </style>
 </head>
-<body>
+<body class="text-white min-h-screen p-6">
+  <div class="max-w-7xl mx-auto">
+    <div class="flex flex-col lg:flex-row gap-8">
+      <div class="flex-1 flex flex-col items-center">
+        <h1 class="text-6xl font-black mb-2 tracking-tight text-center">
+          WHEEL CHALLENGE
+        </h1>
 
-<div class="container">
+        <p class="text-zinc-400 mb-10 text-xl text-center">
+          Profesjonalna imprezowa gra webowa
+        </p>
 
-<header>
-  <h1>EmbedForge</h1>
-  <p>
-    Embedded Systems & Firmware Development<br>
-    Professional engineering services for custom hardware and software solutions.
-  </p>
+        <div class="wheel-container mb-10">
+          <div class="pointer glow"></div>
+          <div id="wheel" class="wheel"></div>
+        </div>
 
-  <div class="badges">
-    <div class="badge">STM32</div>
-    <div class="badge">ESP32</div>
-    <div class="badge">PCB Design</div>
-    <div class="badge">BLE Mesh</div>
-    <div class="badge">Modbus</div>
-    <div class="badge">IoT</div>
+        <button
+          id="spinBtn"
+          class="bg-yellow-400 hover:scale-105 transition text-black px-10 py-5 rounded-2xl text-2xl font-black shadow-2xl"
+        >
+          ZAKRĘĆ KOŁEM
+        </button>
+
+        <div
+          id="resultBox"
+          class="hidden mt-10 bg-zinc-900 border border-zinc-700 rounded-3xl p-8 max-w-2xl w-full text-center shadow-2xl"
+        >
+          <div class="uppercase tracking-[0.3em] text-yellow-400 text-sm mb-3">
+            Wylosowano
+          </div>
+
+          <h2 id="challengeText" class="text-4xl font-black mb-4"></h2>
+
+          <div id="challengePoints" class="text-2xl text-green-400 font-bold mb-6"></div>
+
+          <div class="flex justify-center gap-4 flex-wrap">
+            <button
+              onclick="startTimer()"
+              class="bg-blue-500 px-6 py-3 rounded-xl font-bold"
+            >
+              Start timer
+            </button>
+
+            <button
+              onclick="completeChallenge()"
+              class="bg-green-500 px-6 py-3 rounded-xl font-bold"
+            >
+              Zadanie wykonane
+            </button>
+
+            <button
+              onclick="nextPlayer()"
+              class="bg-red-500 px-6 py-3 rounded-xl font-bold"
+            >
+              Pomiń
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full lg:w-[380px] flex flex-col gap-6">
+        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 shadow-2xl">
+          <div class="flex items-center justify-between mb-5">
+            <h2 class="text-2xl font-black">Gracze</h2>
+
+            <button
+              onclick="addPlayer()"
+              class="bg-white text-black px-4 py-2 rounded-xl font-bold"
+            >
+              + Dodaj
+            </button>
+          </div>
+
+          <div id="players"></div>
+        </div>
+
+        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 shadow-2xl text-center">
+          <h2 class="text-2xl font-black mb-5">Timer</h2>
+
+          <div id="timer" class="text-7xl font-black text-yellow-400 mb-4">
+            30
+          </div>
+
+          <div class="w-full h-4 bg-zinc-800 rounded-full overflow-hidden">
+            <div
+              id="timerBar"
+              class="h-full bg-yellow-400 transition-all"
+              style="width:100%"
+            ></div>
+          </div>
+        </div>
+
+        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-6 shadow-2xl">
+          <h2 class="text-2xl font-black mb-5">Dodaj zadanie</h2>
+
+          <div class="space-y-3">
+            <input
+              id="newTask"
+              placeholder="Nowe zadanie"
+              class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 outline-none"
+            />
+
+            <input
+              id="newPoints"
+              type="number"
+              value="100"
+              class="w-full bg-zinc-800 border border-zinc-700 rounded-xl p-3 outline-none"
+            />
+
+            <button
+              onclick="addTask()"
+              class="w-full bg-purple-500 rounded-xl p-3 font-black"
+            >
+              Dodaj zadanie
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</header>
 
-<section>
-  <h2>Services</h2>
+  <script>
+    const wheel = document.getElementById('wheel');
+    const spinBtn = document.getElementById('spinBtn');
+    const resultBox = document.getElementById('resultBox');
+    const challengeText = document.getElementById('challengeText');
+    const challengePoints = document.getElementById('challengePoints');
+    const playersBox = document.getElementById('players');
 
-  <div class="grid">
+    let rotation = 0;
+    let spinning = false;
+    let currentPlayer = 0;
+    let timerInterval;
 
-    <div class="card">
-      <h3>Firmware Development</h3>
-      <p>
-        Embedded C/C++, RTOS, bootloaders, device drivers, communication stacks.
-      </p>
-    </div>
+    const colors = [
+      '#ef4444',
+      '#3b82f6',
+      '#22c55e',
+      '#f59e0b',
+      '#a855f7',
+      '#ec4899',
+      '#06b6d4',
+      '#84cc16'
+    ];
 
-    <div class="card">
-      <h3>Hardware Design</h3>
-      <p>
-        Custom PCB design, prototyping, electronics development and validation.
-      </p>
-    </div>
+    let tasks = [
+      { text: '20 przysiadów', points: 200 },
+      { text: 'Zaśpiewaj piosenkę', points: 300 },
+      { text: 'Strata kolejki', points: -100 },
+      { text: 'Taniec 30 sekund', points: 400 },
+      { text: 'Powiedz żart', points: 250 },
+      { text: '+500 punktów', points: 500 },
+      { text: 'Wyzwanie drużynowe', points: 350 },
+      { text: 'Mów szeptem minutę', points: 150 }
+    ];
 
-    <div class="card">
-      <h3>IoT & Connectivity</h3>
-      <p>
-        BLE Mesh, WiFi, Ethernet, CAN, RS485, Modbus TCP/RTU integrations.
-      </p>
-    </div>
+    let players = [
+      { name: 'Gracz 1', score: 0 },
+      { name: 'Gracz 2', score: 0 }
+    ];
 
-    <div class="card">
-      <h3>Consulting</h3>
-      <p>
-        Architecture reviews, debugging, optimization and product development support.
-      </p>
-    </div>
+    function renderPlayers() {
+      playersBox.innerHTML = '';
 
-  </div>
-</section>
+      players.forEach((player, index) => {
+        const div = document.createElement('div');
 
-<section>
-  <h2>Projects</h2>
+        div.className = `rounded-2xl p-4 border mb-3 ${
+          currentPlayer === index
+            ? 'border-yellow-400 bg-yellow-400/10'
+            : 'border-zinc-700 bg-zinc-800'
+        }`;
 
-  <div class="grid">
+        div.innerHTML = `
+          <input
+            value="${player.name}"
+            onchange="players[${index}].name=this.value"
+            class="bg-transparent outline-none text-xl font-bold w-full"
+          />
 
-    <div class="card">
-      <h3>BLE Mesh Lighting</h3>
-      <p>
-        Distributed smart lighting control integrated with DALI-2 and Modbus networks.
-      </p>
-    </div>
+          <div class="text-3xl font-black text-green-400 mt-2">
+            ${player.score}
+          </div>
+        `;
 
-    <div class="card">
-      <h3>ETH/CAN Gateway</h3>
-      <p>
-        Ethernet to CAN / Modbus TCP ↔ Modbus RTU gateway for industrial systems.
-      </p>
-    </div>
+        playersBox.appendChild(div);
+      });
+    }
 
-    <div class="card">
-      <h3>Smart Home Modules</h3>
-      <p>
-        Controllers, sensor modules, expansion boards and embedded automation devices.
-      </p>
-    </div>
+    function renderWheel() {
+      wheel.innerHTML = '';
 
-  </div>
-</section>
+      const slice = 360 / tasks.length;
 
-<footer>
-  Contact:
-  <a href="mailto:contact.embedforge@proton.me">
-    contact.embedforge@proton.me
-  </a>
-</footer>
+      tasks.forEach((task, index) => {
+        const div = document.createElement('div');
 
-</div>
+        div.className = 'slice';
+        div.style.background = colors[index % colors.length];
+        div.style.transform = `rotate(${index * slice}deg) skewY(${90 - slice}deg)`;
 
+        div.innerHTML = `<span>${task.text}</span>`;
+
+        wheel.appendChild(div);
+      });
+    }
+
+    function spinWheel() {
+      if (spinning) return;
+
+      spinning = true;
+      resultBox.classList.add('hidden');
+
+      const randomIndex = Math.floor(Math.random() * tasks.length);
+      const slice = 360 / tasks.length;
+
+      rotation += 360 * 6 + (360 - randomIndex * slice);
+
+      wheel.style.transform = `rotate(${rotation}deg)`;
+
+      setTimeout(() => {
+        const task = tasks[randomIndex];
+
+        challengeText.innerText = task.text;
+        challengePoints.innerText = `${task.points > 0 ? '+' : ''}${task.points} punktów`;
+
+        resultBox.classList.remove('hidden');
+
+        window.currentTask = task;
+        spinning = false;
+      }, 5000);
+    }
+
+    function completeChallenge() {
+      players[currentPlayer].score += window.currentTask.points;
+      renderPlayers();
+      nextPlayer();
+    }
+
+    function nextPlayer() {
+      currentPlayer = (currentPlayer + 1) % players.length;
+      renderPlayers();
+    }
+
+    function addPlayer() {
+      players.push({
+        name: `Gracz ${players.length + 1}`,
+        score: 0
+      });
+
+      renderPlayers();
+    }
+
+    function addTask() {
+      const text = document.getElementById('newTask').value;
+      const points = Number(document.getElementById('newPoints').value);
+
+      if (!text.trim()) return;
+
+      tasks.push({ text, points });
+
+      document.getElementById('newTask').value = '';
+      renderWheel();
+    }
+
+    function startTimer() {
+      let time = 30;
+      const timer = document.getElementById('timer');
+      const bar = document.getElementById('timerBar');
+
+      clearInterval(timerInterval);
+
+      timerInterval = setInterval(() => {
+        time--;
+
+        timer.innerText = time;
+        bar.style.width = `${(time / 30) * 100}%`;
+
+        if (time <= 0) {
+          clearInterval(timerInterval);
+        }
+      }, 1000);
+    }
+
+    spinBtn.addEventListener('click', spinWheel);
+
+    renderWheel();
+    renderPlayers();
+  </script>
 </body>
 </html>
