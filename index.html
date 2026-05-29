@@ -238,13 +238,13 @@
     };
 
     let tasks = [
-      { text: '20 przysiadów' },
-      { text: 'Zaśpiewaj piosenkę' },
-      { text: 'Taniec 30 sekund' },
-      { text: 'Powiedz żart' },
+      { text: '20 przysiadów', time: 45 },
+      { text: 'Zaśpiewaj piosenkę', time: 60 },
+      { text: 'Taniec 30 sekund', time: 30 },
+      { text: 'Powiedz żart', time: 20 },
       
-      { text: 'Wyzwanie drużynowe' },
-      { text: 'Mów szeptem minutę' }
+      { text: 'Wyzwanie drużynowe', time: 90 },
+      { text: 'Mów szeptem minutę', time: 60 }
     ];
 
     let players = [
@@ -408,7 +408,7 @@
 
       if (!text.trim()) return;
 
-      tasks.push({ text });
+      tasks.push({ text, time: 30 });
 
       document.getElementById('newTask').value = '';
       renderWheel();
@@ -425,8 +425,11 @@
       const newText = prompt('Edytuj zadanie:', tasks[index].text);
       if (newText === null) return;
 
+      const newTime = prompt('Edytuj czas (sekundy):', tasks[index].time || 30);
+
       tasks[index] = {
-        text: newText
+        text: newText,
+        time: Number(newTime)
       };
 
       renderWheel();
@@ -443,6 +446,7 @@
 
         div.innerHTML = `
           <div class="font-bold text-lg mb-1">${task.text}</div>
+          <div class="text-yellow-400 font-bold mb-2">⏱ ${task.time || 30}s</div>
           
 
           <div class="flex gap-2">
@@ -483,7 +487,7 @@
     }
 
     function startTimer() {
-      let time = 30;
+      let time = window.currentTask?.time || 30;
       const timer = document.getElementById('timer');
       const bar = document.getElementById('timerBar');
 
@@ -493,7 +497,7 @@
         time--;
 
         timer.innerText = time;
-        bar.style.width = `${(time / 30) * 100}%`;
+        bar.style.width = `${(time / (window.currentTask?.time || 30)) * 100}%`;
 
         if (time <= 0) {
           clearInterval(timerInterval);
